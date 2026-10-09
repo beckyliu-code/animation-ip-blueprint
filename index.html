@@ -1,0 +1,342 @@
+<html lang="zh-CN"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Animation IP Blueprint — 一个自上而下、保留创作弹性的原创动画 IP 项目蓝图。">
+  <meta name="theme-color" content="#17211d">
+  <title>Animation IP Blueprint</title>
+  <style>:root {
+  --ink:#17211d; --ink-2:#44504a; --muted:#75807a; --paper:#f3f4f0; --surface:#fbfcf9;
+  --line:#d7dcd6; --line-dark:#b9c0ba; --accent:#9b7136; --accent-soft:#efe5d5;
+  --locked:#2f6551; --locked-bg:#e1eee8; --draft:#6a6257; --draft-bg:#ebe8e2;
+  --archived:#8c9390; --archived-bg:#eef0ee; --alert:#9a5b48; --alert-bg:#f3e5df;
+  --sidebar:16.5rem; --radius:2px; --shadow:0 12px 35px rgba(23,33,29,.08);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans SC",sans-serif}
+button,input,select{font:inherit;color:inherit}
+button,a{touch-action:manipulation}
+a{color:inherit;text-decoration:none}
+.skip-link{position:fixed;z-index:1000;left:1rem;top:-5rem;background:var(--ink);color:#fff;padding:.65rem 1rem}
+.skip-link:focus{top:1rem}
+.app-shell{min-height:100vh;display:grid;grid-template-columns:var(--sidebar) 1fr}
+.sidebar{position:fixed;inset:0 auto 0 0;width:var(--sidebar);background:var(--ink);color:#e9ede9;padding:1.6rem 1.15rem;display:flex;flex-direction:column;z-index:30}
+.brand{display:flex;align-items:center;gap:.8rem;padding:.1rem .55rem 1.8rem;border-bottom:1px solid rgba(255,255,255,.12)}
+.brand-mark{width:2.35rem;height:2.35rem;border:1px solid #c8a56a;display:grid;place-items:center;font:700 .82rem/1 Georgia,serif;color:#e7c58b}
+.brand strong,.brand span{display:block}.brand strong{font-family:Georgia,"Noto Serif SC",serif;font-size:1rem}.brand span{font-size:.71rem;color:#9eaaa4;letter-spacing:.1em;text-transform:uppercase}
+.main-nav{display:grid;gap:.25rem;margin-top:1.6rem}
+.main-nav a{display:flex;align-items:center;gap:.8rem;padding:.74rem .7rem;border-left:2px solid transparent;color:#aeb8b3;font-size:.88rem;transition:.18s}
+.main-nav a span{font:600 .67rem/1 ui-monospace,monospace;color:#66736d}
+.main-nav a:hover,.main-nav a.active{color:#fff;background:rgba(255,255,255,.055);border-left-color:#c9a86a}
+.sidebar-foot{margin-top:auto;border-top:1px solid rgba(255,255,255,.12);padding:1.1rem .55rem 0;color:#9eaaa4;font-size:.78rem}
+.eyebrow{font:700 .68rem/1.2 ui-monospace,SFMono-Regular,monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.sidebar-foot .eyebrow{color:#c9a86a}.sidebar-foot p{margin:.7rem 0 0}
+.main-column{grid-column:2;min-width:0}
+.topbar{height:4.3rem;position:sticky;top:0;z-index:20;background:rgba(243,244,240,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1.1rem,3vw,3.4rem)}
+.breadcrumb{color:var(--muted);font-size:.81rem;letter-spacing:.03em}
+.top-actions{display:flex;align-items:center;gap:1.2rem}.today{font-size:.76rem;color:var(--muted)}
+.search-button,.menu-button,.icon-button{border:0;background:none;cursor:pointer}.search-button{display:flex;align-items:center;gap:.45rem;color:var(--ink-2);font-size:.8rem}.search-button kbd{border:1px solid var(--line-dark);border-radius:3px;padding:.02rem .38rem;background:var(--surface);font-size:.7rem}.menu-button{display:none;font-size:1.2rem}
+main{max-width:96rem;margin:0 auto;padding:clamp(1.6rem,4vw,3.8rem)}
+.loading,.error-state{padding:5rem 0;text-align:center;color:var(--muted)}
+.page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;margin-bottom:2rem}
+.page-head h1{font:500 clamp(2rem,4vw,3.7rem)/1.02 Georgia,"Noto Serif SC",serif;letter-spacing:-.035em;margin:.45rem 0 .65rem;max-width:16ch}
+.page-head p{max-width:45rem;color:var(--ink-2);margin:0}.phase-stamp{border:1px solid var(--line-dark);padding:.85rem 1rem;min-width:15rem}.phase-stamp small,.phase-stamp strong{display:block}.phase-stamp small{color:var(--muted);text-transform:uppercase;letter-spacing:.1em;font-size:.67rem}.phase-stamp strong{margin-top:.25rem;font:500 .95rem Georgia,serif}
+.section{margin-top:3.6rem}.section-head{display:flex;align-items:end;justify-content:space-between;gap:1rem;margin-bottom:1.15rem;border-bottom:1px solid var(--line-dark);padding-bottom:.75rem}.section-head h2{font:500 1.3rem/1.2 Georgia,"Noto Serif SC",serif;margin:0}.section-head p{margin:0;color:var(--muted);font-size:.82rem}.section-index{color:var(--accent);font:700 .67rem/1 ui-monospace,monospace;margin-right:.6rem}
+.direction-panel{display:grid;grid-template-columns:1.35fr .65fr;border:1px solid var(--line-dark);background:var(--surface)}
+.direction-main{padding:clamp(1.35rem,3vw,2.4rem)}.direction-main h2{font:500 clamp(1.5rem,3vw,2.4rem)/1.15 Georgia,serif;margin:.4rem 0}.direction-main>p{color:var(--ink-2);max-width:48rem}.direction-meta{display:flex;gap:1.5rem;flex-wrap:wrap;margin-top:1.5rem}.direction-meta div{border-left:2px solid var(--accent);padding-left:.8rem}.direction-meta small,.direction-meta strong{display:block}.direction-meta small{font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}.direction-meta strong{font-size:.85rem;margin-top:.18rem}
+.principles{border-left:1px solid var(--line);padding:1.5rem;display:grid;align-content:center;gap:.65rem}.principles blockquote{font:italic 1rem/1.45 Georgia,serif;margin:0;color:var(--ink-2)}
+.map-groups{display:grid;grid-template-columns:repeat(5,minmax(9rem,1fr));gap:1rem;align-items:stretch}
+.map-stage{position:relative}.map-stage:not(:last-child)::after{content:"";position:absolute;right:-1rem;top:2.2rem;width:1rem;border-top:1px solid var(--line-dark)}
+.map-stage-title{font:700 .65rem/1 ui-monospace,monospace;color:var(--muted);text-transform:uppercase;letter-spacing:.11em;margin-bottom:.6rem}
+.module-node{display:block;background:var(--surface);border:1px solid var(--line);padding:.85rem;margin-bottom:.6rem;transition:.18s;min-height:6.35rem}.module-node:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:var(--shadow)}
+.node-top{display:flex;justify-content:space-between;gap:.5rem}.node-number{font:700 .64rem/1 ui-monospace,monospace;color:var(--accent)}.blocker-dot{width:.48rem;height:.48rem;border-radius:50%;background:var(--alert);box-shadow:0 0 0 3px var(--alert-bg)}
+.module-node h3{font:600 .84rem/1.3 Georgia,serif;margin:.55rem 0 .75rem}.node-foot{display:flex;align-items:center;gap:.6rem}.mini-progress{height:2px;flex:1;background:var(--line)}.mini-progress i{display:block;height:100%;background:var(--ink-2)}
+.status{display:inline-flex;align-items:center;gap:.3rem;padding:.22rem .45rem;border:1px solid currentColor;font:700 .61rem/1.1 ui-monospace,monospace;letter-spacing:.03em;white-space:nowrap}.status.locked,.status.ready,.status.published{color:var(--locked);background:var(--locked-bg)}.status.draft,.status.not-started{color:var(--draft);background:var(--draft-bg)}.status.archived{color:var(--archived);background:var(--archived-bg)}.status.in-progress,.status.review,.status.discussing,.status.open{color:var(--accent);background:var(--accent-soft)}
+.overview-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:1.2rem}.panel{border:1px solid var(--line);background:var(--surface);padding:1.15rem}.panel h3{font:500 1rem Georgia,serif;margin:0}.panel-head{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:.9rem}
+.filter-row{display:flex;gap:.45rem;flex-wrap:wrap}.filter-chip{border:1px solid var(--line-dark);background:transparent;padding:.38rem .65rem;font-size:.73rem;cursor:pointer}.filter-chip.active{background:var(--ink);color:white;border-color:var(--ink)}
+.window-list{display:grid;gap:.65rem}.window-card{display:grid;grid-template-columns:1fr auto;gap:.8rem;border-top:1px solid var(--line);padding-top:.8rem}.window-card:first-child{border-top:0;padding-top:0}.window-card h4{margin:0 0 .25rem;font-size:.9rem}.window-meta{display:flex;gap:.85rem;flex-wrap:wrap;color:var(--muted);font-size:.72rem}.window-meta strong{color:var(--ink-2);font-weight:600}.focus{font-size:.67rem;color:var(--accent);white-space:nowrap}
+.timeline{display:grid;grid-template-columns:repeat(6,1fr);position:relative;padding-top:.3rem}.timeline::before{content:"";position:absolute;left:1%;right:1%;top:1rem;border-top:1px solid var(--line-dark)}.milestone{position:relative;padding:1.8rem .55rem 0 0}.milestone::before{content:"";position:absolute;top:.72rem;left:0;width:.55rem;height:.55rem;border:2px solid var(--surface);background:var(--accent);box-shadow:0 0 0 1px var(--accent)}.milestone h4{font-size:.78rem;margin:0 0 .3rem}.milestone time{font-size:.68rem;color:var(--muted)}
+.question-list,.move-list,.decision-list{display:grid;gap:0}.question-item,.move-item{display:grid;grid-template-columns:auto 1fr auto;gap:.7rem;align-items:start;padding:.75rem 0;border-top:1px solid var(--line)}.question-item:first-child,.move-item:first-child{border-top:0}.item-index{font:700 .65rem/1.5 ui-monospace,monospace;color:var(--accent)}.question-item p,.move-item p{margin:0;font-size:.84rem}.module-link{color:var(--muted);font-size:.67rem;text-transform:uppercase;letter-spacing:.06em}
+.module-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}.module-card{border:1px solid var(--line);background:var(--surface);padding:1.2rem;display:flex;flex-direction:column;min-height:15rem;transition:.18s}.module-card:hover{border-color:var(--accent);box-shadow:var(--shadow)}.module-card h2{font:500 1.2rem/1.2 Georgia,serif;margin:1rem 0 .6rem}.module-card p{font-size:.81rem;color:var(--ink-2);margin:0}.module-card .card-foot{margin-top:auto;padding-top:1.2rem;display:flex;justify-content:space-between;align-items:center}.progress-label{font-size:.68rem;color:var(--muted)}
+.toolbar{display:flex;gap:.65rem;flex-wrap:wrap;margin-bottom:1.2rem}.toolbar input,.toolbar select{border:1px solid var(--line-dark);background:var(--surface);padding:.55rem .7rem;min-height:2.45rem}.toolbar input{flex:1;min-width:14rem}.view-toggle{margin-left:auto;display:flex}.view-toggle button{border:1px solid var(--line-dark);background:var(--surface);padding:.45rem .75rem;cursor:pointer}.view-toggle button+button{border-left:0}.view-toggle button.active{background:var(--ink);color:#fff}
+.detail-hero{display:grid;grid-template-columns:1fr auto;gap:2rem;padding-bottom:1.7rem;border-bottom:1px solid var(--line-dark)}.detail-hero h1{font:500 clamp(2.2rem,5vw,4.8rem)/1 Georgia,serif;margin:.5rem 0}.detail-hero p{max-width:50rem;color:var(--ink-2)}.detail-progress{width:10rem;display:grid;place-content:center}.progress-ring{width:8rem;height:8rem;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--accent) calc(var(--progress)*1%),var(--line) 0);position:relative}.progress-ring::after{content:"";position:absolute;inset:.55rem;border-radius:50%;background:var(--paper)}.progress-ring strong{z-index:1;font:500 1.6rem Georgia,serif}.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-top:1.2rem}.detail-block{background:var(--surface);border:1px solid var(--line);padding:1.25rem}.detail-block.wide{grid-column:1/-1}.detail-block h2{font:500 1.02rem Georgia,serif;margin:0 0 .9rem}.detail-block p{color:var(--ink-2)}.workflow{display:flex;gap:0;overflow:auto;padding-bottom:.2rem}.workflow span{min-width:8.5rem;padding:.75rem;border:1px solid var(--line);font-size:.75rem;position:relative}.workflow span+span{border-left:0}.workflow span+span::before{content:"›";position:absolute;left:-.25rem;background:var(--surface);color:var(--accent)}.simple-list{padding:0;margin:0;list-style:none}.simple-list li{padding:.52rem 0;border-top:1px solid var(--line);font-size:.82rem}.simple-list li:first-child{border-top:0}.dependency-flow{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap}.dep-node{border:1px solid var(--line-dark);padding:.5rem .65rem;background:var(--paper);font-size:.74rem}.dep-arrow{color:var(--accent)}
+.table-wrap{overflow:auto;border:1px solid var(--line);background:var(--surface)}table{width:100%;border-collapse:collapse;min-width:58rem}th,td{padding:.75rem .8rem;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}th{position:sticky;top:0;background:#eceeea;color:var(--muted);font-size:.67rem;text-transform:uppercase;letter-spacing:.07em}td{font-size:.78rem}td strong{font-size:.84rem}.calendar-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}.calendar-card{background:var(--surface);border:1px solid var(--line);padding:1rem;min-height:12rem}.calendar-card time{font:700 .7rem ui-monospace,monospace;color:var(--accent)}.calendar-card h3{font:500 1rem Georgia,serif;margin:.6rem 0 .25rem}.calendar-card p{font-size:.78rem;color:var(--ink-2)}.calendar-meta{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.8rem}.tag{background:var(--paper);border:1px solid var(--line);padding:.2rem .4rem;font-size:.64rem;color:var(--muted)}
+.decision-row{display:grid;grid-template-columns:9rem 1.1fr 1fr 8rem;gap:1rem;padding:1rem 0;border-top:1px solid var(--line)}.decision-row:first-child{border-top:0}.decision-row time{font:700 .68rem ui-monospace,monospace;color:var(--muted)}.decision-row h3{font:500 .96rem Georgia,serif;margin:0 0 .3rem}.decision-row p{font-size:.78rem;color:var(--ink-2);margin:0}.previous{font-size:.72rem;color:var(--muted);margin-top:.4rem}.archive-card{border-left:2px solid var(--archived);padding:1rem 1.2rem;background:var(--surface);margin-bottom:.75rem}.archive-card h3{font:500 1rem Georgia,serif;margin:.45rem 0}.archive-card p{font-size:.8rem;color:var(--muted);margin:.25rem 0}
+.empty{padding:2rem;text-align:center;color:var(--muted);border:1px dashed var(--line-dark)}
+.search-dialog{width:min(42rem,calc(100% - 2rem));padding:0;border:1px solid var(--line-dark);box-shadow:0 30px 80px rgba(0,0,0,.25);background:var(--surface)}.search-dialog::backdrop{background:rgba(10,16,13,.55)}.search-head{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.2rem;border-bottom:1px solid var(--line)}.search-head label{font:500 1rem Georgia,serif}.search-head button{border:0;background:transparent;font-size:1.4rem;cursor:pointer}.search-dialog>input{border:0;border-bottom:1px solid var(--line);width:100%;padding:1rem 1.2rem;outline:none}.search-results{max-height:60vh;overflow:auto;padding:.5rem}.search-result{display:block;padding:.8rem;border-bottom:1px solid var(--line)}.search-result:hover{background:var(--paper)}.search-result strong,.search-result span{display:block}.search-result span{font-size:.72rem;color:var(--muted);margin-top:.2rem}.scrim{display:none}
+@media(max-width:1100px){.map-groups{grid-template-columns:repeat(3,1fr)}.map-stage::after{display:none}.module-grid{grid-template-columns:repeat(2,1fr)}.timeline{grid-template-columns:repeat(3,1fr)}.calendar-grid{grid-template-columns:repeat(2,1fr)}.direction-panel{grid-template-columns:1fr}.principles{border-left:0;border-top:1px solid var(--line)}}
+@media(max-width:760px){.app-shell{display:block}.sidebar{transform:translateX(-100%);transition:.2s}.sidebar.open{transform:none}.main-column{width:100%}.menu-button{display:block}.topbar{height:3.8rem;padding:0 1rem}.breadcrumb{font-size:.72rem}.today,.search-button span,.search-button kbd{display:none}.scrim.open{display:block;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:25}main{padding:1.3rem 1rem 3rem}.page-head,.detail-hero{align-items:start;display:block}.phase-stamp{margin-top:1.2rem;min-width:0}.direction-meta{gap:.9rem}.map-groups,.module-grid,.calendar-grid{grid-template-columns:1fr}.overview-grid,.detail-grid{grid-template-columns:1fr}.timeline{display:block;padding:0 0 0 1rem}.timeline::before{top:.5rem;bottom:.5rem;left:.25rem;right:auto;border-top:0;border-left:1px solid var(--line-dark)}.milestone{padding:.25rem 0 1rem 1rem}.milestone::before{top:.35rem;left:-1rem}.detail-progress{margin-top:1.3rem;width:auto;display:block}.progress-ring{width:6rem;height:6rem}.detail-block.wide{grid-column:auto}.decision-row{grid-template-columns:1fr;gap:.35rem}.window-card{grid-template-columns:1fr}.workflow span{min-width:7.5rem}.view-toggle{margin-left:0}.section{margin-top:2.7rem}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳至主要内容</a>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">IP</div>
+        <div><strong>Animation IP</strong><span>Production Blueprint</span></div>
+      </div>
+      <nav class="main-nav" aria-label="主要导航">
+        <a href="#/overview" data-route="overview" class="active"><span>01</span>Project Overview</a>
+        <a href="#/modules" data-route="modules"><span>02</span>Modules</a>
+        <a href="#/editorial" data-route="editorial"><span>03</span>90-Day Map</a>
+        <a href="#/decisions" data-route="decisions"><span>04</span>Decision Log</a>
+        <a href="#/archive" data-route="archive"><span>05</span>Archive</a>
+      </nav>
+      <div class="sidebar-foot">
+        <span class="eyebrow">Guiding principle</span>
+        <p>Structure provides orientation.<br>Creative work keeps its freedom.</p>
+      </div>
+    </aside>
+
+    <div class="main-column">
+      <header class="topbar">
+        <button class="menu-button" id="menuButton" type="button" aria-label="打开导航" aria-expanded="false">☰</button>
+        <div id="breadcrumb" class="breadcrumb">Project Blueprint / Overview</div>
+        <div class="top-actions">
+          <button class="search-button" id="searchButton" type="button" aria-label="打开全局搜索">⌕ <span>Search</span><kbd>/</kbd></button>
+          <span class="today" id="todayLabel">2026年10月9日</span>
+        </div>
+      </header>
+      <main id="main" tabindex="-1">
+    <header class="page-head"><div><span class="eyebrow">Level 1 · Project Blueprint</span><h1>Quiet Coast</h1><p>一张持续更新的创作地图：先看方向、结构和阶段，再选择今天适合推进的事情。</p></div><div class="phase-stamp"><small>Current phase</small><strong>Content Architecture / Season Planning</strong></div></header>
+    <section class="direction-panel" aria-labelledby="direction-title">
+      <div class="direction-main"><span class="eyebrow">Project Direction</span><h2 id="direction-title">Nature + Slow Living + Story + Character IP</h2><p>受中国北方沿海、辽东半岛式山海地貌启发的原创虚构世界。Soft Future / Quiet Future：技术高度发展，但退到生活背景。</p>
+        <div class="direction-meta"><div><small>Format</small><strong>30–60 second short animation</strong></div><div><small>Launch target</small><strong>2026年11月10日</strong></div><div><small>Season</small><strong>Season 01 · Late Autumn → Early Winter → Deep Winter</strong></div></div>
+      </div><div class="principles"><blockquote>“Nothing is rushed, but things keep happening.”</blockquote><blockquote>“The world is kind, but not boring.”</blockquote><blockquote>“Life is unpredictable, but basically generous.”</blockquote><blockquote>“视觉和感官可以慢，故事信息不能太慢。”</blockquote></div>
+    </section>
+    <section class="section"><div class="section-head"><h2><span class="section-index">01</span>Project Map</h2><p>方向是主线，模块可以并行推进</p></div>
+      <div class="map-groups"><div class="map-stage"><div class="map-stage-title">Foundation</div><a class="module-node" href="#/module/core-direction"><div class="node-top"><span class="node-number">01</span></div><h3>Core Direction</h3><div class="node-foot"><span class="status locked">LOCKED</span><span class="mini-progress"><i style="width:82%"></i></span></div></a><a class="module-node" href="#/module/world"><div class="node-top"><span class="node-number">02</span></div><h3>World</h3><div class="node-foot"><span class="status locked">LOCKED</span><span class="mini-progress"><i style="width:68%"></i></span></div></a><a class="module-node" href="#/module/characters"><div class="node-top"><span class="node-number">03</span><span class="blocker-dot" title="存在待解决问题"></span></div><h3>Characters</h3><div class="node-foot"><span class="status draft">DRAFT</span><span class="mini-progress"><i style="width:34%"></i></span></div></a></div><div class="map-stage"><div class="map-stage-title">Story Logic</div><a class="module-node" href="#/module/story-system"><div class="node-top"><span class="node-number">04</span></div><h3>Story System</h3><div class="node-foot"><span class="status draft">DRAFT</span><span class="mini-progress"><i style="width:46%"></i></span></div></a><a class="module-node" href="#/module/season-culture"><div class="node-top"><span class="node-number">05</span></div><h3>Season &amp; Culture</h3><div class="node-foot"><span class="status locked">LOCKED</span><span class="mini-progress"><i style="width:55%"></i></span></div></a></div><div class="map-stage"><div class="map-stage-title">Planning</div><a class="module-node" href="#/module/season-planning"><div class="node-top"><span class="node-number">06</span><span class="blocker-dot" title="存在待解决问题"></span></div><h3>Season / Editorial Planning</h3><div class="node-foot"><span class="status draft">DRAFT</span><span class="mini-progress"><i style="width:38%"></i></span></div></a><a class="module-node" href="#/module/episodes"><div class="node-top"><span class="node-number">07</span><span class="blocker-dot" title="存在待解决问题"></span></div><h3>Episodes</h3><div class="node-foot"><span class="status draft">DRAFT</span><span class="mini-progress"><i style="width:12%"></i></span></div></a></div><div class="map-stage"><div class="map-stage-title">Making</div><a class="module-node" href="#/module/visual-assets"><div class="node-top"><span class="node-number">08</span></div><h3>Visual &amp; Asset Library</h3><div class="node-foot"><span class="status draft">DRAFT</span><span class="mini-progress"><i style="width:24%"></i></span></div></a><a class="module-node" href="#/module/production"><div class="node-top"><span class="node-number">09</span><span class="blocker-dot" title="存在待解决问题"></span></div><h3>Production</h3><div class="node-foot"><span class="status draft">DRAFT</span><span class="mini-progress"><i style="width:8%"></i></span></div></a></div><div class="map-stage"><div class="map-stage-title">Release + Learn</div><a class="module-node" href="#/module/publishing"><div class="node-top"><span class="node-number">10</span></div><h3>Publishing</h3><div class="node-foot"><span class="status locked">LOCKED</span><span class="mini-progress"><i style="width:31%"></i></span></div></a><a class="module-node" href="#/module/analytics"><div class="node-top"><span class="node-number">11</span></div><h3>Analytics &amp; Iteration</h3><div class="node-foot"><span class="status draft">DRAFT</span><span class="mini-progress"><i style="width:5%"></i></span></div></a><a class="module-node" href="#/module/archive"><div class="node-top"><span class="node-number">12</span></div><h3>Archive</h3><div class="node-foot"><span class="status locked">LOCKED</span><span class="mini-progress"><i style="width:70%"></i></span></div></a></div></div>
+    </section>
+    <section class="section"><div class="section-head"><h2><span class="section-index">02</span>Phase &amp; Milestones</h2><p>只显示项目级节点</p></div>
+      <div class="timeline"><article class="milestone"><h4>Content Architecture</h4><time datetime="2026-10-18">10月18日</time></article><article class="milestone"><h4>Season 01 Planning</h4><time datetime="2026-10-28">10月28日</time></article><article class="milestone"><h4>Character Development</h4><time datetime="2026-10-30">10月30日</time></article><article class="milestone"><h4>Pilot Production</h4><time datetime="2026-11-05">11月5日</time></article><article class="milestone"><h4>Launch</h4><time datetime="2026-11-10">11月10日</time></article><article class="milestone"><h4>First Analytics Review</h4><time datetime="2026-11-30">11月30日</time></article></div>
+    </section>
+    <section class="section"><div class="overview-grid">
+      <div class="panel"><div class="panel-head"><h3>Work Windows</h3><div class="filter-row" id="scopeFilters"><button class="filter-chip active" data-scope="ACTIVE">Active now</button><button class="filter-chip " data-scope="ALL">All windows</button></div></div>
+        <div class="filter-row" id="focusFilters" style="margin-bottom:1rem"><button class="filter-chip active" data-focus="All">All</button><button class="filter-chip " data-focus="High Focus">High</button><button class="filter-chip " data-focus="Medium Focus">Medium</button><button class="filter-chip " data-focus="Low Focus">Low</button></div>
+        <div class="window-list"><article class="window-card"><div><h4><a href="#/module/season-culture">Solar Term Reference Notes</a></h4><div class="window-meta"><span><strong>Window</strong> 10月9日 → 10月16日</span><span><strong>Deadline</strong> 10月22日</span><span>1–2 hrs</span></div></div><span class="focus">Medium Focus</span></article><article class="window-card"><div><h4><a href="#/module/visual-assets">Asset Naming Convention</a></h4><div class="window-meta"><span><strong>Window</strong> 10月9日 → 10月20日</span><span><strong>Deadline</strong> 10月24日</span><span>30 min</span></div></div><span class="focus">Low Focus</span></article></div>
+      </div>
+      <div class="panel"><div class="panel-head"><h3>Upcoming Deadlines</h3><span class="eyebrow">Key only</span></div>
+        <div class="window-list"><div class="window-card"><div><h4>Season 01 Map</h4><div class="window-meta"><span>Season / Editorial Planning</span></div></div><strong>10月20日</strong></div><div class="window-card"><div><h4>Story Framework v1</h4><div class="window-meta"><span>Story System</span></div></div><strong>10月21日</strong></div><div class="window-card"><div><h4>Solar Term Reference Notes</h4><div class="window-meta"><span>Season &amp; Culture</span></div></div><strong>10月22日</strong></div><div class="window-card"><div><h4>Asset Naming Convention</h4><div class="window-meta"><span>Visual &amp; Asset Library</span></div></div><strong>10月24日</strong></div></div>
+      </div>
+    </div></section>
+    <section class="section"><div class="overview-grid">
+      <div class="panel"><div class="panel-head"><h3>Open Questions</h3><span class="eyebrow">Needs discussion</span></div><div class="question-list"><div class="question-item"><span class="item-index">Q01</span><p>主角组合是固定双角色，还是保留轮换视角？</p><a class="module-link" href="#/module/characters">Characters</a></div><div class="question-item"><span class="item-index">Q02</span><p>Season 01 的故事密度应以单事件还是双事件结构为主？</p><a class="module-link" href="#/module/story-system">Story System</a></div><div class="question-item"><span class="item-index">Q03</span><p>首发批次是否需要连续三集形成一个轻量故事弧？</p><a class="module-link" href="#/module/episodes">Episodes</a></div><div class="question-item"><span class="item-index">Q04</span><p>节气内容中，文化说明应显性出现到什么程度？</p><a class="module-link" href="#/module/season-culture">Season &amp; Culture</a></div><div class="question-item"><span class="item-index">Q05</span><p>视频中的科技元素保持完全隐性，还是允许偶尔进入情节？</p><a class="module-link" href="#/module/world">World</a></div></div></div>
+      <div class="panel"><div class="panel-head"><h3>Available Next Moves</h3><span class="eyebrow">Choose freely</span></div><div class="move-list"><div class="move-item"><span class="item-index">01</span><p>把四条体验原则转成故事检查表</p><a class="module-link" href="#/module/core-direction">Core Direction</a></div><div class="move-item"><span class="item-index">02</span><p>整理海岸与森林空间关系</p><a class="module-link" href="#/module/world">World</a></div><div class="move-item"><span class="item-index">03</span><p>比较固定双角色与轮换视角</p><a class="module-link" href="#/module/characters">Characters</a></div><div class="move-item"><span class="item-index">04</span><p>完成 Story Framework v1</p><a class="module-link" href="#/module/story-system">Story System</a></div><div class="move-item"><span class="item-index">05</span><p>补充立冬至大雪的自然变化</p><a class="module-link" href="#/module/season-culture">Season &amp; Culture</a></div><div class="move-item"><span class="item-index">06</span><p>确认前三周的内容节奏</p><a class="module-link" href="#/module/season-planning">Season / Editorial Planning</a></div></div></div>
+    </div></section></main>
+    </div>
+  </div>
+
+  <dialog class="search-dialog" id="searchDialog">
+    <form method="dialog" class="search-head">
+      <label for="globalSearch">Search the blueprint</label>
+      <button aria-label="关闭搜索">×</button>
+    </form>
+    <input id="globalSearch" type="search" placeholder="搜索模块、决定、问题、工作窗口…" autocomplete="off">
+    <div id="searchResults" class="search-results"></div>
+  </dialog>
+  <div class="scrim" id="scrim"></div>
+  <script type="module">const DATA_FILES = [
+  "project", "modules", "roadmap", "work-windows", "decisions", "open-questions",
+  "editorial-calendar", "story-bank", "episodes", "assets"
+];
+
+const state = {
+  data: {}, focus: "All", windowScope: "ACTIVE", moduleStatus: "ALL", moduleGroup: "ALL", moduleQuery: "",
+  editorialView: "calendar", editorialStatus: "ALL", editorialQuery: "", decisionStatus: "CURRENT"
+};
+
+const $ = (selector, root = document) => root.querySelector(selector);
+const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+const esc = (value = "") => String(value).replace(/[&<>'"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[c]));
+const slug = value => String(value).toLowerCase().replace(/\s+/g, "-");
+const status = value => `<span class="status ${slug(value)}">${esc(value)}</span>`;
+const fmt = value => new Intl.DateTimeFormat("zh-CN", {month:"short", day:"numeric"}).format(new Date(`${value}T12:00:00`));
+const fullDate = value => new Intl.DateTimeFormat("zh-CN", {year:"numeric", month:"short", day:"numeric"}).format(new Date(`${value}T12:00:00`));
+
+function moduleById(id) { return state.data.modules.find(m => m.id === id); }
+function moduleName(id) { return moduleById(id)?.name || id; }
+function linkModule(id) { return `#/module/${encodeURIComponent(id)}`; }
+
+async function loadData() {
+  state.data = {"project":{"name":"Quiet Coast","type":"Original Animation IP","positioning":"Nature + Slow Living + Story + Character IP","format":"30–60 second short animation","phase":"Content Architecture / Season Planning","launch_target":"2026-11-10","frequency":"Tuesday / Thursday / Saturday","season":"Season 01 · Late Autumn → Early Winter → Deep Winter","principles":["Nothing is rushed, but things keep happening.","The world is kind, but not boring.","Life is unpredictable, but basically generous.","视觉和感官可以慢，故事信息不能太慢。"],"world_summary":"受中国北方沿海、辽东半岛式山海地貌启发的原创虚构世界。Soft Future / Quiet Future：技术高度发展，但退到生活背景。"},"modules":[{"id":"core-direction","number":"01","name":"Core Direction","group":"foundation","status":"LOCKED","progress":82,"blocker":false,"overview":"定义项目为什么存在、为谁创作，以及所有后续判断的共同边界。","goal":"形成足够稳定的创作北极星，使世界、角色和故事判断保持一致。","workflow":["定位与体验","内容原则","边界定义","版本锁定"],"current_step":"核心体验与内容原则已锁定，等待角色系统验证。","dependencies":{"depends_on":[],"blocks":["world","characters","story-system"]},"next_moves":["把四条体验原则转成故事检查表","验证 30–60 秒格式下的信息密度"],"content":["Original Animation IP","Nature + Slow Living + Story + Character IP","30–60 秒短动画"]},{"id":"world","number":"02","name":"World","group":"foundation","status":"LOCKED","progress":68,"blocker":false,"overview":"建立可持续叙事的地理、空间、时间与生活规则。","goal":"完成能支撑 Season 01 的 World Bible v1。","workflow":["地貌与气候","生活空间","时间逻辑","视觉规则","World Bible"],"current_step":"主地貌、房屋方向与光线已锁定；生活设施仍在补全。","dependencies":{"depends_on":["core-direction"],"blocks":["story-system","visual-assets","episodes"]},"next_moves":["整理海岸与森林空间关系","定义 Quiet Future 的可见程度"],"content":["北方沿海与山海地貌启发的原创世界","Soft Future / Quiet Future","不是现实中国复制，也不是欧洲海边小镇"]},{"id":"characters","number":"03","name":"Characters","group":"foundation","status":"DRAFT","progress":34,"blocker":true,"overview":"定义角色在故事中的功能、关系、行为边界与视觉识别。","goal":"锁定首季主要角色功能与最小角色组合。","workflow":["角色功能","关系结构","行为逻辑","视觉轮廓","表达测试"],"current_step":"角色功能讨论中；视觉造型暂不锁定。","dependencies":{"depends_on":["core-direction","world"],"blocks":["story-system","episodes","visual-assets"]},"next_moves":["比较固定双角色与轮换视角","为两种方案各写三个 Story Seed"],"content":["Character design: DRAFT","先定义叙事功能，再锁定造型"]},{"id":"story-system","number":"04","name":"Story System","group":"story","status":"DRAFT","progress":46,"blocker":false,"overview":"建立可重复但不机械的短动画故事生成系统。","goal":"完成 Story Framework、Story Engine 与 Seed Bank 的 v1 闭环。","workflow":["Story Framework","Story Engine","Seed Bank","Episode Outline","Script","Storyboard"],"current_step":"Story Framework v1 与 Engine 分类同步整理中。","dependencies":{"depends_on":["core-direction","world","characters"],"blocks":["season-planning","episodes"]},"next_moves":["完成 Story Framework v1","用三种 Engine 生成 9 个 Story Seed"],"content":["视觉与感官可以慢，故事信息不能太慢","Engine 可通过数据文件扩展"]},{"id":"season-culture","number":"05","name":"Season & Culture","group":"story","status":"LOCKED","progress":55,"blocker":false,"overview":"管理自然季节与传统文化两套独立但可关联的时间系统。","goal":"建立首季节气、文化事件与生活变化的参考层。","workflow":["自然变化","节气索引","文化事件","生活行为","故事入口"],"current_step":"双时间轴规则已锁定，正在补充晚秋至深冬资料。","dependencies":{"depends_on":["world"],"blocks":["season-planning","episodes"]},"next_moves":["补充立冬至大雪的自然变化","为 S1–S3 各写两个故事入口"],"content":["24 Solar Terms = nature timeline","Lunar / Traditional Calendar = cultural timeline","Seasonal Layer: S0–S3"]},{"id":"season-planning","number":"06","name":"Season / Editorial Planning","group":"planning","status":"DRAFT","progress":38,"blocker":true,"overview":"把方向、季节与故事能力映射到 90 天发布节奏。","goal":"完成 Season 01 的内容弧线、发布节点与可调整选题池。","workflow":["阶段划分","节气映射","Story Engine 配比","Episode 槽位","滚动调整"],"current_step":"90-Day Editorial Map 是当前下一大工作区。","dependencies":{"depends_on":["story-system","season-culture"],"blocks":["episodes","production","publishing"]},"next_moves":["确认前三周的内容节奏","定义首季三段情绪变化"],"content":["Launch around 2026-11-10","Tuesday / Thursday / Saturday","Late Autumn → Early Winter → Deep Winter"]},{"id":"episodes","number":"07","name":"Episodes","group":"making","status":"DRAFT","progress":12,"blocker":true,"overview":"把 Story Seed 推进为可制作、可发布、可复盘的单集单元。","goal":"建立前 9 集候选池并完成首批 3 集的 Outline。","workflow":["Seed Selection","Outline","Script","Storyboard","Production Handoff"],"current_step":"字段结构已建立，正式制作尚未开始。","dependencies":{"depends_on":["story-system","season-planning","characters"],"blocks":["production","publishing"]},"next_moves":["建立 Episode Metadata 模板","从 Seed Bank 选择首批候选"],"content":["Episode production: NOT STARTED","每个制作环节保留独立状态"]},{"id":"visual-assets","number":"08","name":"Visual & Asset Library","group":"making","status":"DRAFT","progress":24,"blocker":false,"overview":"用轻量索引管理视觉资产、提示词、版本与关联关系。","goal":"建立可追踪但不过度沉重的 Asset Index。","workflow":["分类","命名","版本","关联","归档"],"current_step":"分类与字段已确定，命名规则待锁定。","dependencies":{"depends_on":["world","characters"],"blocks":["production"]},"next_moves":["锁定命名规则","登记首批 World 参考资产"],"content":["GitHub 仅保存索引与轻量文件，不作为大型媒体 DAM"]},{"id":"production","number":"09","name":"Production","group":"making","status":"DRAFT","progress":8,"blocker":true,"overview":"组织图像、视频、声音与剪辑的制作交接和版本状态。","goal":"让每集从 Storyboard 到 Ready 的状态清晰可见。","workflow":["Storyboard","Image","Video","Sound","Edit","Review"],"current_step":"流程骨架已建立，等待 Pilot Episode。","dependencies":{"depends_on":["episodes","visual-assets"],"blocks":["publishing"]},"next_moves":["定义 Pilot 的最小交付标准","准备生产状态检查表"],"content":["Production status 与 Blueprint status 分开管理"]},{"id":"publishing","number":"10","name":"Publishing","group":"release","status":"LOCKED","progress":31,"blocker":false,"overview":"管理发布节奏、元数据、上线准备与渠道一致性。","goal":"在 2026-11-10 前形成稳定的首发流程。","workflow":["发布节奏","Metadata","Final Check","Publish","Record"],"current_step":"频率已锁定；首发内容与渠道细节待定。","dependencies":{"depends_on":["season-planning","episodes","production"],"blocks":["analytics"]},"next_moves":["建立发布前检查模板","确定首发批次结构"],"content":["Tuesday / Thursday / Saturday","Target: around 2026-11-10"]},{"id":"analytics","number":"11","name":"Analytics & Iteration","group":"release","status":"DRAFT","progress":5,"blocker":false,"overview":"把内容反馈转化为轻量、可解释的迭代依据。","goal":"明确首轮复盘观察什么，而不是让指标替代创作判断。","workflow":["Observe","Compare","Interpret","Decide","Iterate"],"current_step":"P2 范围；先保留数据结构。","dependencies":{"depends_on":["publishing"],"blocks":["story-system","season-planning"]},"next_moves":["定义首轮复盘的 5 个关键问题"],"content":["First Analytics Review: 2026-11-30"]},{"id":"archive","number":"12","name":"Archive","group":"system","status":"LOCKED","progress":70,"blocker":false,"overview":"保存被替换的方向、决定和版本，让当前系统保持清晰。","goal":"任何重要方向都能追溯，但旧版本不干扰当前判断。","workflow":["Replace","Mark Archived","Record Reason","Link Current Version"],"current_step":"归档原则已锁定，持续按版本更新。","dependencies":{"depends_on":[],"blocks":[]},"next_moves":["补充角色早期方案的替换原因"],"content":["不删除历史；主视图只突出当前有效版本"]}],"roadmap":[{"id":"r1","title":"Content Architecture","date":"2026-10-18","status":"IN PROGRESS","note":"确定世界、故事与内容系统的主骨架"},{"id":"r2","title":"Season 01 Planning","date":"2026-10-28","status":"IN PROGRESS","note":"完成首季节奏与 90-Day Map"},{"id":"r3","title":"Character Development","date":"2026-10-30","status":"DRAFT","note":"锁定主要角色功能与视觉方向"},{"id":"r4","title":"Pilot Production","date":"2026-11-05","status":"NOT STARTED","note":"完成首批试播内容"},{"id":"r5","title":"Launch","date":"2026-11-10","status":"NOT STARTED","note":"首集发布"},{"id":"r6","title":"First Analytics Review","date":"2026-11-30","status":"NOT STARTED","note":"首轮内容反馈与迭代复盘"}],"work-windows":[{"id":"w1","title":"Season 01 Map","module":"season-planning","work_window_start":"2026-10-10","work_window_end":"2026-10-18","deadline":"2026-10-20","estimated_effort":"deep work","focus_level":"High Focus","priority":"HIGH","status":"IN PROGRESS","depends_on":["story-system"]},{"id":"w2","title":"Character Function","module":"characters","work_window_start":"2026-10-12","work_window_end":"2026-10-24","deadline":"2026-10-26","estimated_effort":"3 hrs","focus_level":"High Focus","priority":"HIGH","status":"IN PROGRESS","depends_on":["core-direction"]},{"id":"w3","title":"Solar Term Reference Notes","module":"season-culture","work_window_start":"2026-10-09","work_window_end":"2026-10-16","deadline":"2026-10-22","estimated_effort":"1–2 hrs","focus_level":"Medium Focus","priority":"MEDIUM","status":"IN PROGRESS","depends_on":[]},{"id":"w4","title":"Asset Naming Convention","module":"visual-assets","work_window_start":"2026-10-09","work_window_end":"2026-10-20","deadline":"2026-10-24","estimated_effort":"30 min","focus_level":"Low Focus","priority":"LOW","status":"NOT STARTED","depends_on":[]},{"id":"w5","title":"Story Framework v1","module":"story-system","work_window_start":"2026-10-11","work_window_end":"2026-10-19","deadline":"2026-10-21","estimated_effort":"deep work","focus_level":"High Focus","priority":"HIGH","status":"IN PROGRESS","depends_on":["core-direction","world"]},{"id":"w6","title":"Episode Metadata Template","module":"episodes","work_window_start":"2026-10-18","work_window_end":"2026-10-25","deadline":"2026-10-27","estimated_effort":"1–2 hrs","focus_level":"Medium Focus","priority":"MEDIUM","status":"NOT STARTED","depends_on":["story-system","season-planning"]}],"decisions":[{"id":"d1","decision":"Main house orientation","value":"Southeast / South-Southeast","status":"LOCKED","date":"2026-10-03","reason":"Morning light is the primary visual mood.","module":"world","previous_version":null},{"id":"d2","decision":"Primary visual light","value":"Morning / late-morning light","status":"LOCKED","date":"2026-10-03","reason":"建立温和、清醒且可持续的日常气质。","module":"world","previous_version":"全天候均衡光线"},{"id":"d3","decision":"Cultural time system","value":"24 Solar Terms = nature timeline; Lunar Calendar = cultural timeline","status":"LOCKED","date":"2026-10-05","reason":"避免自然节律与文化事件在内容规划中混为一体。","module":"season-culture","previous_version":null},{"id":"d4","decision":"Publishing rhythm","value":"Tuesday / Thursday / Saturday","status":"LOCKED","date":"2026-10-06","reason":"每周三集，在内容稳定性与制作空间之间保留余量。","module":"publishing","previous_version":"Monday / Wednesday / Friday"},{"id":"d5","decision":"World reference direction","value":"Northern Chinese coast / Liaodong-inspired fictional terrain","status":"LOCKED","date":"2026-10-02","reason":"同时容纳山、海、森林与明确四季，但不复制现实地点。","module":"world","previous_version":"European seaside town"},{"id":"d6","decision":"Early character silhouette","value":"Round-bodied animal pair","status":"ARCHIVED","date":"2026-09-26","reason":"角色功能尚未定义，过早锁定造型会限制故事系统。","module":"characters","previous_version":null}],"open-questions":[{"id":"q1","question":"主角组合是固定双角色，还是保留轮换视角？","module":"characters","priority":"HIGH","status":"OPEN"},{"id":"q2","question":"Season 01 的故事密度应以单事件还是双事件结构为主？","module":"story-system","priority":"HIGH","status":"OPEN"},{"id":"q3","question":"首发批次是否需要连续三集形成一个轻量故事弧？","module":"episodes","priority":"MEDIUM","status":"OPEN"},{"id":"q4","question":"节气内容中，文化说明应显性出现到什么程度？","module":"season-culture","priority":"MEDIUM","status":"DISCUSSING"},{"id":"q5","question":"视频中的科技元素保持完全隐性，还是允许偶尔进入情节？","module":"world","priority":"LOW","status":"OPEN"}],"editorial-calendar":[{"release_date":"2026-11-10","episode_id":"S01E01","working_title":"The First Cold Wind","season_phase":"Late Autumn","solar_term":"立冬 / Beginning of Winter","lunar_event":"","story_engine":"Nature Trigger","seasonal_layer":"S2","location":"Terrace","characters":["Mori","Aru"],"one_line_story":"第一阵冷风吹走了晾晒的香草，两个角色沿风向找回它们。","status":"DRAFT"},{"release_date":"2026-11-12","episode_id":"S01E02","working_title":"A Light Across the Bay","season_phase":"Late Autumn","solar_term":"立冬 / Beginning of Winter","lunar_event":"","story_engine":"Mystery / Discovery","seasonal_layer":"S1","location":"Coast","characters":["Mori"],"one_line_story":"清晨海湾出现一束规律闪动的光，来源比想象中平常。","status":"DRAFT"},{"release_date":"2026-11-14","episode_id":"S01E03","working_title":"Too Many Chestnuts","season_phase":"Late Autumn","solar_term":"立冬 / Beginning of Winter","lunar_event":"","story_engine":"Gentle Escalation","seasonal_layer":"S2","location":"Kitchen","characters":["Mori","Aru"],"one_line_story":"一篮栗子不断滚落，最后变成一场临时烘烤计划。","status":"DRAFT"},{"release_date":"2026-11-17","episode_id":"S01E04","working_title":"Fog Path","season_phase":"Early Winter","solar_term":"小雪 / Light Snow","lunar_event":"","story_engine":"Rescue / Connection","seasonal_layer":"S1","location":"Forest","characters":["Aru"],"one_line_story":"薄雾覆盖熟悉的小路，一个微小声音成为回家的线索。","status":"DRAFT"},{"release_date":"2026-11-19","episode_id":"S01E05","working_title":"The Wrong Jar","season_phase":"Early Winter","solar_term":"小雪 / Light Snow","lunar_event":"","story_engine":"Misunderstanding","seasonal_layer":"S2","location":"Kitchen","characters":["Mori","Aru"],"one_line_story":"盐与糖的标签被风吹换了位置，早餐出现意外味道。","status":"DRAFT"},{"release_date":"2026-11-21","episode_id":"S01E06","working_title":"Before the Snow","season_phase":"Early Winter","solar_term":"小雪 / Light Snow","lunar_event":"","story_engine":"Goal + Obstacle","seasonal_layer":"S2","location":"House","characters":["Mori","Aru"],"one_line_story":"他们想在初雪前收好柴火，最后一捆却怎么也找不到。","status":"DRAFT"},{"release_date":"2026-11-24","episode_id":"S01E07","working_title":"Window Pattern","season_phase":"Early Winter","solar_term":"小雪 / Light Snow","lunar_event":"","story_engine":"Process + Twist","seasonal_layer":"S1","location":"House","characters":["Mori"],"one_line_story":"擦去窗上水汽时，一个每天都在变化的图案被发现。","status":"DRAFT"},{"release_date":"2026-11-26","episode_id":"S01E08","working_title":"A Seat for Three","season_phase":"Early Winter","solar_term":"小雪 / Light Snow","lunar_event":"","story_engine":"Relationship","seasonal_layer":"S0","location":"Terrace","characters":["Mori","Aru"],"one_line_story":"只有两把椅子的露台，突然来了一位安静的访客。","status":"DRAFT"},{"release_date":"2026-11-28","episode_id":"S01E09","working_title":"The Returning Bell","season_phase":"Deep Winter","solar_term":"大雪 / Major Snow","lunar_event":"","story_engine":"Loop / Callback","seasonal_layer":"S3","location":"Coast","characters":["Mori","Aru"],"one_line_story":"海风带回第一集中遗失的小铜铃，季节也进入新的段落。","status":"DRAFT"}],"story-bank":{"engines":["Mystery / Discovery","Goal + Obstacle","Misunderstanding","Gentle Escalation","Process + Twist","Rescue / Connection","Nature Trigger","Relationship","Loop / Callback"],"seeds":[{"id":"SS-001","title":"The Wind Map","one_line_story":"落叶在院子里拼出一条从未走过的路线。","story_engine":"Mystery / Discovery","secondary_engine":"Nature Trigger","season":"Late Autumn","seasonal_layer":"S1","characters":["Mori"],"locations":["House","Forest"],"status":"DRAFT","notes":"可测试单角色叙事","ai_production_difficulty":"Medium"},{"id":"SS-002","title":"One More Bowl","one_line_story":"晚饭时总有一只多出的碗，直到访客出现。","story_engine":"Loop / Callback","secondary_engine":"Relationship","season":"Early Winter","seasonal_layer":"S0","characters":["Mori","Aru"],"locations":["Kitchen"],"status":"DRAFT","notes":"适合作为角色关系测试","ai_production_difficulty":"Low"}]},"episodes":[{"episode_id":"S01E01","working_title":"The First Cold Wind","release_date":"2026-11-10","one_line_story":"第一阵冷风吹走了晾晒的香草。","story_engine":"Nature Trigger","secondary_engine":"Goal + Obstacle","season":"Late Autumn","solar_term":"立冬","lunar_event":"","seasonal_layer":"S2","characters":["Mori","Aru"],"locations":["Terrace"],"script_status":"NOT STARTED","storyboard_status":"NOT STARTED","image_status":"NOT STARTED","video_status":"NOT STARTED","sound_status":"NOT STARTED","edit_status":"NOT STARTED","publish_status":"NOT STARTED","work_window_start":"2026-10-24","work_window_end":"2026-11-04","deadline":"2026-11-06","focus_level":"High Focus","priority":"HIGH","dependencies":["Story Framework v1","Character Function"],"notes":"Pilot candidate"}],"assets":[{"asset_id":"WORLD-001","asset_type":"World","title":"Main House Morning Exterior","status":"LOCKED","version":"v3","file_path":"assets/world/main-house-morning-v3.webp","related_module":"world","related_episode":"","prompt_path":"prompts/world/main-house.md","notes":"Southeast light direction"},{"asset_id":"CHAR-001","asset_type":"Character","title":"Primary Character Silhouette","status":"DRAFT","version":"v1","file_path":"assets/characters/primary-silhouette-v1.webp","related_module":"characters","related_episode":"","prompt_path":"prompts/character/primary.md","notes":"Function not locked"},{"asset_id":"WORLD-000","asset_type":"World","title":"European Seaside Reference","status":"ARCHIVED","version":"v1","file_path":"archive/world/european-seaside-v1.webp","related_module":"world","related_episode":"","prompt_path":"","notes":"Replaced by northern coast direction"}]};
+  init();
+}
+
+function init() {
+  $("#todayLabel").textContent = new Intl.DateTimeFormat("zh-CN", {year:"numeric", month:"short", day:"numeric"}).format(new Date());
+  window.addEventListener("hashchange", renderRoute);
+  setupShell();
+  if (!location.hash) location.hash = "#/overview";
+  renderRoute();
+}
+
+function setupShell() {
+  const sidebar = $("#sidebar"), scrim = $("#scrim"), menu = $("#menuButton");
+  const closeMenu = () => { sidebar.classList.remove("open"); scrim.classList.remove("open"); menu.setAttribute("aria-expanded", "false"); };
+  menu.addEventListener("click", () => { const open = sidebar.classList.toggle("open"); scrim.classList.toggle("open", open); menu.setAttribute("aria-expanded", String(open)); });
+  scrim.addEventListener("click", closeMenu);
+  $(".main-nav").addEventListener("click", closeMenu);
+
+  const dialog = $("#searchDialog"), input = $("#globalSearch");
+  const openSearch = () => { dialog.showModal(); setTimeout(() => input.focus(), 30); renderSearch(""); };
+  $("#searchButton").addEventListener("click", openSearch);
+  input.addEventListener("input", e => renderSearch(e.target.value));
+  $("#searchResults").addEventListener("click", () => dialog.close());
+  document.addEventListener("keydown", e => {
+    if (e.key === "/" && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) { e.preventDefault(); openSearch(); }
+    if (e.key === "Escape") closeMenu();
+  });
+}
+
+function currentRoute() {
+  const parts = location.hash.replace(/^#\/?/, "").split("/").filter(Boolean);
+  return { name: parts[0] || "overview", id: parts[1] ? decodeURIComponent(parts[1]) : null };
+}
+
+function renderRoute() {
+  const route = currentRoute();
+  const renderers = { overview: renderOverview, modules: renderModules, module: () => renderModule(route.id), editorial: renderEditorial, decisions: renderDecisions, archive: renderArchive };
+  (renderers[route.name] || renderOverview)();
+  $$(".main-nav a").forEach(a => a.classList.toggle("active", a.dataset.route === (route.name === "module" ? "modules" : route.name)));
+  $("#breadcrumb").textContent = route.name === "module" ? `Project Blueprint / Modules / ${moduleName(route.id)}` : `Project Blueprint / ${({overview:"Overview",modules:"Modules",editorial:"90-Day Map",decisions:"Decision Log",archive:"Archive"})[route.name] || "Overview"}`;
+  window.scrollTo({top:0});
+}
+
+function pageHead(eyebrow, title, description, side = "") {
+  return `<header class="page-head"><div><span class="eyebrow">${esc(eyebrow)}</span><h1>${esc(title)}</h1><p>${esc(description)}</p></div>${side}</header>`;
+}
+
+function renderOverview() {
+  const { project, modules, roadmap } = state.data;
+  const allWindows = state.data["work-windows"];
+  const questions = state.data["open-questions"];
+  const today = new Date(); today.setHours(0,0,0,0);
+  const active = allWindows.filter(w => new Date(`${w.work_window_start}T00:00:00`) <= today && new Date(`${w.work_window_end}T23:59:59`) >= today);
+  const scopedWindows = state.windowScope === "ACTIVE" ? active : allWindows;
+  const focusWindows = state.focus === "All" ? scopedWindows : scopedWindows.filter(w => w.focus_level === state.focus);
+  const stageGroups = [
+    ["Foundation", ["core-direction","world","characters"]],
+    ["Story Logic", ["story-system","season-culture"]],
+    ["Planning", ["season-planning","episodes"]],
+    ["Making", ["visual-assets","production"]],
+    ["Release + Learn", ["publishing","analytics","archive"]]
+  ];
+  const moves = modules.filter(m => m.status !== "ARCHIVED").flatMap(m => m.next_moves.slice(0,1).map(move => ({move,module:m}))).slice(0,6);
+
+  $("#main").innerHTML = `
+    ${pageHead("Level 1 · Project Blueprint", project.name, "一张持续更新的创作地图：先看方向、结构和阶段，再选择今天适合推进的事情。", `<div class="phase-stamp"><small>Current phase</small><strong>${esc(project.phase)}</strong></div>`)}
+    <section class="direction-panel" aria-labelledby="direction-title">
+      <div class="direction-main"><span class="eyebrow">Project Direction</span><h2 id="direction-title">${esc(project.positioning)}</h2><p>${esc(project.world_summary)}</p>
+        <div class="direction-meta"><div><small>Format</small><strong>${esc(project.format)}</strong></div><div><small>Launch target</small><strong>${fullDate(project.launch_target)}</strong></div><div><small>Season</small><strong>${esc(project.season)}</strong></div></div>
+      </div><div class="principles">${project.principles.map(p => `<blockquote>“${esc(p)}”</blockquote>`).join("")}</div>
+    </section>
+    <section class="section"><div class="section-head"><h2><span class="section-index">01</span>Project Map</h2><p>方向是主线，模块可以并行推进</p></div>
+      <div class="map-groups">${stageGroups.map(([label, ids]) => `<div class="map-stage"><div class="map-stage-title">${label}</div>${ids.map(id => moduleNode(moduleById(id))).join("")}</div>`).join("")}</div>
+    </section>
+    <section class="section"><div class="section-head"><h2><span class="section-index">02</span>Phase & Milestones</h2><p>只显示项目级节点</p></div>
+      <div class="timeline">${roadmap.map(r => `<article class="milestone"><h4>${esc(r.title)}</h4><time datetime="${r.date}">${fmt(r.date)}</time></article>`).join("")}</div>
+    </section>
+    <section class="section"><div class="overview-grid">
+      <div class="panel"><div class="panel-head"><h3>Work Windows</h3><div class="filter-row" id="scopeFilters"><button class="filter-chip ${state.windowScope==="ACTIVE"?"active":""}" data-scope="ACTIVE">Active now</button><button class="filter-chip ${state.windowScope==="ALL"?"active":""}" data-scope="ALL">All windows</button></div></div>
+        <div class="filter-row" id="focusFilters" style="margin-bottom:1rem">${["All","High Focus","Medium Focus","Low Focus"].map(f => `<button class="filter-chip ${state.focus===f?"active":""}" data-focus="${f}">${f.replace(" Focus","")}</button>`).join("")}</div>
+        <div class="window-list">${focusWindows.length ? focusWindows.map(windowCard).join("") : `<div class="empty">这个 Focus Level 当前没有进行中的工作窗口。</div>`}</div>
+      </div>
+      <div class="panel"><div class="panel-head"><h3>Upcoming Deadlines</h3><span class="eyebrow">Key only</span></div>
+        <div class="window-list">${[...allWindows].sort((a,b)=>a.deadline.localeCompare(b.deadline)).slice(0,4).map(w => `<div class="window-card"><div><h4>${esc(w.title)}</h4><div class="window-meta"><span>${esc(moduleName(w.module))}</span></div></div><strong>${fmt(w.deadline)}</strong></div>`).join("")}</div>
+      </div>
+    </div></section>
+    <section class="section"><div class="overview-grid">
+      <div class="panel"><div class="panel-head"><h3>Open Questions</h3><span class="eyebrow">Needs discussion</span></div><div class="question-list">${questions.slice(0,5).map((q,i) => `<div class="question-item"><span class="item-index">Q${String(i+1).padStart(2,"0")}</span><p>${esc(q.question)}</p><a class="module-link" href="${linkModule(q.module)}">${esc(moduleName(q.module))}</a></div>`).join("")}</div></div>
+      <div class="panel"><div class="panel-head"><h3>Available Next Moves</h3><span class="eyebrow">Choose freely</span></div><div class="move-list">${moves.map((x,i) => `<div class="move-item"><span class="item-index">${String(i+1).padStart(2,"0")}</span><p>${esc(x.move)}</p><a class="module-link" href="${linkModule(x.module.id)}">${esc(x.module.name)}</a></div>`).join("")}</div></div>
+    </div></section>`;
+  $("#focusFilters").addEventListener("click", e => { if (e.target.dataset.focus) { state.focus = e.target.dataset.focus; renderOverview(); } });
+  $("#scopeFilters").addEventListener("click", e => { if (e.target.dataset.scope) { state.windowScope = e.target.dataset.scope; renderOverview(); } });
+}
+
+function moduleNode(m) {
+  return `<a class="module-node" href="${linkModule(m.id)}"><div class="node-top"><span class="node-number">${m.number}</span>${m.blocker?'<span class="blocker-dot" title="存在待解决问题"></span>':""}</div><h3>${esc(m.name)}</h3><div class="node-foot">${status(m.status)}<span class="mini-progress"><i style="width:${m.progress}%"></i></span></div></a>`;
+}
+
+function windowCard(w) {
+  return `<article class="window-card"><div><h4><a href="${linkModule(w.module)}">${esc(w.title)}</a></h4><div class="window-meta"><span><strong>Window</strong> ${fmt(w.work_window_start)} → ${fmt(w.work_window_end)}</span><span><strong>Deadline</strong> ${fmt(w.deadline)}</span><span>${esc(w.estimated_effort)}</span></div></div><span class="focus">${esc(w.focus_level)}</span></article>`;
+}
+
+function renderModules() {
+  const groups = {foundation:"Foundation",story:"Story Logic",planning:"Planning",making:"Making",release:"Release + Learn",system:"System"};
+  let modules = state.data.modules.filter(m => (state.moduleStatus === "ALL" || m.status === state.moduleStatus) && (state.moduleGroup === "ALL" || m.group === state.moduleGroup));
+  if (state.moduleQuery) modules = modules.filter(m => `${m.name} ${m.overview} ${m.goal}`.toLowerCase().includes(state.moduleQuery.toLowerCase()));
+  $("#main").innerHTML = `${pageHead("Level 1 → Level 2", "Blueprint Modules", "十二个模块共同组成项目骨架。进入模块后，再查看目标、工作流、决定、问题与内容。")}
+    <div class="toolbar"><input id="moduleQuery" value="${esc(state.moduleQuery)}" type="search" placeholder="搜索模块…" aria-label="搜索模块"><select id="moduleStatus" aria-label="按状态筛选"><option value="ALL">All statuses</option>${["LOCKED","DRAFT","ARCHIVED"].map(x=>`<option ${state.moduleStatus===x?"selected":""}>${x}</option>`).join("")}</select><select id="moduleGroup" aria-label="按阶段筛选"><option value="ALL">All stages</option>${Object.entries(groups).map(([v,l])=>`<option value="${v}" ${state.moduleGroup===v?"selected":""}>${l}</option>`).join("")}</select></div>
+    <div class="module-grid">${modules.length ? modules.map(m => `<a class="module-card" href="${linkModule(m.id)}"><div class="node-top"><span class="node-number">${m.number} · ${esc(groups[m.group])}</span>${m.blocker?'<span class="blocker-dot" title="存在待解决问题"></span>':""}</div><h2>${esc(m.name)}</h2><p>${esc(m.overview)}</p><div class="card-foot">${status(m.status)}<span class="progress-label">${m.progress}% mapped</span></div></a>`).join("") : '<div class="empty">没有符合当前筛选条件的模块。</div>'}</div>`;
+  $("#moduleQuery").addEventListener("input", e => { state.moduleQuery=e.target.value; renderModules(); $("#moduleQuery").focus(); });
+  $("#moduleStatus").addEventListener("change", e => { state.moduleStatus=e.target.value; renderModules(); });
+  $("#moduleGroup").addEventListener("change", e => { state.moduleGroup=e.target.value; renderModules(); });
+}
+
+function renderModule(id) {
+  const m = moduleById(id);
+  if (!m) { $("#main").innerHTML = `<div class="error-state"><h1>Module not found</h1><a href="#/modules">返回模块列表</a></div>`; return; }
+  const decisions = state.data.decisions.filter(d => d.module === id && d.status === "LOCKED");
+  const questions = state.data["open-questions"].filter(q => q.module === id);
+  const windows = state.data["work-windows"].filter(w => w.module === id);
+  const incoming = m.dependencies.depends_on.map(moduleName), outgoing = m.dependencies.blocks.map(moduleName);
+  $("#main").innerHTML = `<header class="detail-hero"><div><span class="eyebrow">Module ${m.number}</span><h1>${esc(m.name)}</h1><p>${esc(m.overview)}</p><div class="filter-row">${status(m.status)}${m.blocker?'<span class="status open">OPEN BLOCKER</span>':""}</div></div><div class="detail-progress"><div class="progress-ring" style="--progress:${m.progress}"><strong>${m.progress}%</strong></div></div></header>
+    <div class="detail-grid">
+      <section class="detail-block"><h2>Overview / Goal</h2><p>${esc(m.goal)}</p><p><strong>Current status</strong><br>${esc(m.current_step)}</p></section>
+      <section class="detail-block"><h2>Dependencies</h2><div class="dependency-flow">${incoming.length?incoming.map(x=>`<span class="dep-node">${esc(x)}</span><span class="dep-arrow">→</span>`).join(""):""}<span class="dep-node"><strong>${esc(m.name)}</strong></span>${outgoing.length?`<span class="dep-arrow">→</span>${outgoing.map(x=>`<span class="dep-node">${esc(x)}</span>`).join('<span class="dep-arrow">·</span>')}`:""}</div><p class="previous">Dependencies 提供上下文，不会锁死其他模块。</p></section>
+      <section class="detail-block wide"><h2>Workflow</h2><div class="workflow">${m.workflow.map((x,i)=>`<span><strong>${String(i+1).padStart(2,"0")}</strong><br>${esc(x)}</span>`).join("")}</div></section>
+      <section class="detail-block"><h2>Work Windows / Schedule</h2>${windows.length?`<div class="window-list">${windows.map(windowCard).join("")}</div>`:'<div class="empty">当前没有工作窗口。</div>'}</section>
+      <section class="detail-block"><h2>Locked Decisions</h2>${decisions.length?`<ul class="simple-list">${decisions.map(d=>`<li><strong>${esc(d.decision)}</strong><br>${esc(d.value)}<div class="previous">Why: ${esc(d.reason)}</div></li>`).join("")}</ul>`:'<div class="empty">这个模块还没有 Locked Decision。</div>'}</section>
+      <section class="detail-block"><h2>Open Questions</h2>${questions.length?`<ul class="simple-list">${questions.map(q=>`<li>${esc(q.question)}</li>`).join("")}</ul>`:'<div class="empty">当前没有开放问题。</div>'}</section>
+      <section class="detail-block"><h2>Available Next Moves</h2><ul class="simple-list">${m.next_moves.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></section>
+      <section class="detail-block wide"><h2>Content</h2><ul class="simple-list">${m.content.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></section>
+    </div>`;
+}
+
+function renderEditorial() {
+  let rows = state.data["editorial-calendar"].filter(x => state.editorialStatus === "ALL" || x.status === state.editorialStatus);
+  if (state.editorialQuery) rows = rows.filter(x => Object.values(x).flat().join(" ").toLowerCase().includes(state.editorialQuery.toLowerCase()));
+  const content = state.editorialView === "calendar" ? `<div class="calendar-grid">${rows.map(x => `<article class="calendar-card"><time>${fullDate(x.release_date)} · ${esc(x.episode_id)}</time><h3>${esc(x.working_title)}</h3><p>${esc(x.one_line_story)}</p><div class="calendar-meta"><span class="tag">${esc(x.season_phase)}</span><span class="tag">${esc(x.solar_term)}</span><span class="tag">${esc(x.story_engine)}</span><span class="tag">${esc(x.seasonal_layer)}</span></div></article>`).join("")}</div>` : `<div class="table-wrap"><table><thead><tr><th>Release</th><th>Episode</th><th>Story</th><th>Season / Culture</th><th>Engine</th><th>Status</th></tr></thead><tbody>${rows.map(x=>`<tr><td>${fmt(x.release_date)}</td><td><strong>${esc(x.episode_id)}</strong><br>${esc(x.working_title)}</td><td>${esc(x.one_line_story)}</td><td>${esc(x.season_phase)}<br>${esc(x.solar_term)}</td><td>${esc(x.story_engine)}<br>${esc(x.seasonal_layer)}</td><td>${status(x.status)}</td></tr>`).join("")}</tbody></table></div>`;
+  $("#main").innerHTML = `${pageHead("Planning Layer", "90-Day Editorial Map", "现实发布季节与动画季节基本同步。这里提供内容结构，不把创作锁进死板日程。")}
+    <div class="toolbar"><input id="editorialQuery" value="${esc(state.editorialQuery)}" type="search" placeholder="搜索 Episode、节气、Engine…"><select id="editorialStatus"><option value="ALL">All statuses</option>${["DRAFT","LOCKED","READY","PUBLISHED"].map(x=>`<option ${state.editorialStatus===x?"selected":""}>${x}</option>`).join("")}</select><div class="view-toggle"><button data-view="calendar" class="${state.editorialView==="calendar"?"active":""}">Calendar</button><button data-view="list" class="${state.editorialView==="list"?"active":""}">List</button></div></div>${content}`;
+  $("#editorialQuery").addEventListener("input", e=>{state.editorialQuery=e.target.value;renderEditorial();$("#editorialQuery").focus()});
+  $("#editorialStatus").addEventListener("change",e=>{state.editorialStatus=e.target.value;renderEditorial()});
+  $$("[data-view]").forEach(b=>b.addEventListener("click",()=>{state.editorialView=b.dataset.view;renderEditorial()}));
+}
+
+function renderDecisions() {
+  const rows = state.data.decisions.filter(d => state.decisionStatus === "ALL" || (state.decisionStatus === "CURRENT" ? d.status !== "ARCHIVED" : d.status === "ARCHIVED"));
+  $("#main").innerHTML = `${pageHead("Project Memory", "Decision Log", "只保留两件最重要的事：决定了什么，以及为什么。")}
+    <div class="toolbar"><div class="filter-row">${[["CURRENT","Current"],["ARCHIVED","Archived"],["ALL","All"]].map(([v,l])=>`<button class="filter-chip ${state.decisionStatus===v?"active":""}" data-decision-filter="${v}">${l}</button>`).join("")}</div></div>
+    <div class="panel decision-list">${rows.map(d=>`<article class="decision-row"><div><time>${fullDate(d.date)}</time><div style="margin-top:.45rem">${status(d.status)}</div></div><div><h3>${esc(d.decision)}</h3><strong>${esc(d.value)}</strong>${d.previous_version?`<div class="previous">Previous: ${esc(d.previous_version)}</div>`:""}</div><p>${esc(d.reason)}</p><a class="module-link" href="${linkModule(d.module)}">${esc(moduleName(d.module))}</a></article>`).join("")}</div>`;
+  $$('[data-decision-filter]').forEach(b=>b.addEventListener("click",()=>{state.decisionStatus=b.dataset.decisionFilter;renderDecisions()}));
+}
+
+function renderArchive() {
+  const decisions = state.data.decisions.filter(x=>x.status==="ARCHIVED");
+  const assets = state.data.assets.filter(x=>x.status==="ARCHIVED");
+  $("#main").innerHTML = `${pageHead("Project Memory", "Archive", "被替换不等于被删除。旧版本留在这里，当前视图只突出仍然有效的方向。")}
+    <section class="section" style="margin-top:0"><div class="section-head"><h2>Archived Decisions</h2><p>${decisions.length} records</p></div>${decisions.map(d=>`<article class="archive-card">${status(d.status)}<h3>${esc(d.decision)} · ${esc(d.value)}</h3><p>${esc(d.reason)}</p>${d.previous_version?`<p>Previous version: ${esc(d.previous_version)}</p>`:""}</article>`).join("")||'<div class="empty">暂无归档决定。</div>'}</section>
+    <section class="section"><div class="section-head"><h2>Archived Assets</h2><p>${assets.length} records</p></div>${assets.map(a=>`<article class="archive-card">${status(a.status)}<h3>${esc(a.asset_id)} · ${esc(a.title)}</h3><p>${esc(a.notes)}</p><p>${esc(a.file_path)}</p></article>`).join("")||'<div class="empty">暂无归档资产。</div>'}</section>`;
+}
+
+function renderSearch(query) {
+  const q = query.trim().toLowerCase();
+  if (!q) { $("#searchResults").innerHTML = `<div class="empty">输入关键词，可搜索模块、决定、开放问题与工作窗口。</div>`; return; }
+  const results = [
+    ...state.data.modules.map(x=>({title:x.name,meta:`Module · ${x.status}`,text:`${x.overview} ${x.goal}`,href:linkModule(x.id)})),
+    ...state.data.decisions.map(x=>({title:`${x.decision}: ${x.value}`,meta:`Decision · ${x.status}`,text:x.reason,href:"#/decisions"})),
+    ...state.data["open-questions"].map(x=>({title:x.question,meta:`Open Question · ${moduleName(x.module)}`,text:x.priority,href:linkModule(x.module)})),
+    ...state.data["work-windows"].map(x=>({title:x.title,meta:`Work Window · ${moduleName(x.module)}`,text:`${x.focus_level} ${x.status}`,href:linkModule(x.module)})),
+    ...state.data["editorial-calendar"].map(x=>({title:`${x.episode_id} · ${x.working_title}`,meta:`Editorial · ${x.release_date}`,text:`${x.one_line_story} ${x.story_engine}`,href:"#/editorial"}))
+  ].filter(x => `${x.title} ${x.meta} ${x.text}`.toLowerCase().includes(q)).slice(0,12);
+  $("#searchResults").innerHTML = results.length ? results.map(x=>`<a class="search-result" href="${x.href}"><strong>${esc(x.title)}</strong><span>${esc(x.meta)}</span></a>`).join("") : `<div class="empty">没有找到“${esc(query)}”。</div>`;
+}
+
+loadData();
+</script>
+
+
+</body><div id="codex-browser-sidebar-comments-root" style="position: fixed; inset: 0px; pointer-events: none; z-index: 2147483647;"></div></html>
